@@ -44,8 +44,8 @@ def create_audio_response(output_path):
     import soundfile as sf
     from kittentts import KittenTTS
 
-    model = KittenTTS("KittenML/kitten-tts-mini-0.8")
-    audio = model.generate("A man is not finished when he's defeated. He's finished when he quits. --Richard Nixon", voice="Leo")
+    model = KittenTTS("KittenML/kitten-tts-nano-0.8")
+    audio = model.generate("Now is the time for all good men to come to the aid of the party.", voice="Leo")
     sf.write(output_path, audio, 24000)
     print(f"Wrote audio to {output_path}")
 
