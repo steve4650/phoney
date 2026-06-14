@@ -6,7 +6,6 @@ def parse_args():
         "-i",
         "--input",
         dest="input",
-        required=True,
         help="Path to input audio file",
     )
     return parser.parse_args()
@@ -14,14 +13,10 @@ def parse_args():
 
 def main():
     args = parse_args()
-    process_audio(args.input)
-
-
-def process_audio(input_path):
     import whisper
 
     model = whisper.load_model("tiny")
-    result = model.transcribe(input_path)
+    result = model.transcribe(args.input)
     print(result["text"])
 
 
