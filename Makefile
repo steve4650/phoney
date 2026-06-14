@@ -3,7 +3,8 @@
 fmt:
 	uv run ruff format
 	uv run ruff check --select I --fix --unsafe-fixes
-	bun run -i oxfmt
+	bun i
+	bun run oxfmt
 
 fix:
 	make fmt
@@ -11,4 +12,5 @@ fix:
 ci:
 	uv run ruff format --check
 	uv run ruff check
-	bun run -i oxfmt --check
+	bun i
+	bun run oxfmt --check
