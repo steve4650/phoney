@@ -10,3 +10,4 @@ wheels/
 .venv
 node_modules
 .ruff_cache
+test_audio
