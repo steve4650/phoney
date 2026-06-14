@@ -7,6 +7,9 @@ def main():
     if args.output:
         create_audio_response(args.output)
 
+    if args.llm:
+        test_llm()
+
 
 def parse_args():
     """parse CLI args..."""
@@ -25,10 +28,16 @@ def parse_args():
         dest="output",
         help="Path to write generated TTS audio file",
     )
+    parser.add_argument(
+        "--llm",
+        dest="llm",
+        action="store_true",
+        help="Test LLM responses with qwen3.6:27b model",
+    )
     args = parser.parse_args()
 
-    if not args.input and not args.output:
-        parser.error("one of -i/--input or -o/--output is required")
+    if not args.input and not args.output and not args.llm:
+        parser.error("one of -i/--input, -o/--output, or --llm is required")
 
     return args
 
@@ -51,6 +60,24 @@ def create_audio_response(output_path):
     audio = model.generate("Now is the time for all good men to come to the aid of the party.", voice="Leo")
     sf.write(output_path, audio, 24000)
     print(f"Wrote audio to {output_path}")
+
+
+def test_llm():
+    """the --llm command. test LLM responses with the qwen3.6:27b model."""
+    from ollama import ChatResponse, chat
+
+    response: ChatResponse = chat(
+        model="qwen3.6:27b",
+        messages=[
+            {
+                "role": "user",
+                "content": "Why is the sky blue?",
+            },
+        ],
+    )
+    print(response["message"]["content"])
+    # or access fields directly from the response object
+    print(response.message.content)
 
 
 if __name__ == "__main__":
